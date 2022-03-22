@@ -21,6 +21,11 @@ body {
     overflow: hidden;
 }
 
+#can {
+    width: 50%;
+    height: 50%;
+}
+
 .container {
     position: absolute;
     background-color: #00000056;

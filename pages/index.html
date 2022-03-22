@@ -3,39 +3,26 @@
 
 <head>
     <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <!-- <meta http-equiv="X-UA-Compatible" content="IE=edge"> -->
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Cécile CHENAVAS - Art-thérapie & Numérique</title>
-    <link rel="stylesheet" href="/style/global-style.css">
-    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/@mediapipe/control_utils_3d@0.3/control_utils_3d.css" crossorigin="anonymous">
-    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/@mediapipe/control_utils@0.6/control_utils.css" crossorigin="anonymous">
-    <script src="https://cdn.jsdelivr.net/npm/@mediapipe/camera_utils@0.3/camera_utils.js" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@mediapipe/control_utils@0.6/control_utils.js" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@mediapipe/control_utils_3d@0.3/control_utils_3d.js" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@mediapipe/drawing_utils@0.3/drawing_utils.js" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@mediapipe/hands@0.4/hands.js" crossorigin="anonymous"></script>
-
+    <link rel="stylesheet" href="../style/global-style.css">
+    <script src="https://cdn.jsdelivr.net/npm/@mediapipe/camera_utils/camera_utils.js" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@mediapipe/control_utils/control_utils.js" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@mediapipe/drawing_utils/drawing_utils.js" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@mediapipe/hands/hands.js" crossorigin="anonymous"></script>
 </head>
 
-<body>
-    <div class="loading">
-        <div class="spinner"></div>
-        <div class="message">
-            Chargement...
-        </div>
-    </div>
+<body id="body">
     <div class="container">
         <video class="input_video"></video>
         <canvas class="output_canvas" width="1280px" height="720px"></canvas>
     </div>
-    <div class="control-panel">
+    <div>
+        <canvas id="can"></canvas>
     </div>
-    <div class='square-box'>
-        <div class="landmark-grid-container">
-        </div>
-    </div>
-    <!-- partial -->
-    <script type="module" src="/js/handTracking.js"></script>
+    <!-- <script type="module" src="../js/handTracking.js"></script> -->
+    <script type="module" src="../js/3Denv.js"></script>
 
 </body>
 
