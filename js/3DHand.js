@@ -3,11 +3,35 @@ import * as THREE from '../three.js/build/three.module.js';
 import * as ENV from './3Denv.js';
 
 export let handObjList = [];
-
+// let handModel;
+// export function loadHand() {
+//     const fbxLoader = new FBXLoader()
+//     fbxLoader.load(
+//         '../ressources/handRigged.fbx',
+//         (object) => {
+//             // object.traverse(function (child) {
+//             //     if ((child as THREE.Mesh).isMesh) {
+//             //         // (child as THREE.Mesh).material = material
+//             //         if ((child as THREE.Mesh).material) {
+//             //             ((child as THREE.Mesh).material as THREE.MeshBasicMaterial).transparent = false
+//             //         }
+//             //     }
+//             // })
+//             // object.scale.set(.01, .01, .01)
+//             ENV.scene.add(object)
+//         },
+//         (xhr) => {
+//             console.log((xhr.loaded / xhr.total) * 100 + '% loaded')
+//         },
+//         (error) => {
+//             console.log(error)
+//         }
+//     )
+// }
 
 export function handListing() {
     // requestAnimationFrame(ENV.animate);
-    ENV.renderer.render(ENV.scene, ENV.camera);
+    // ENV.renderer.render(ENV.scene, ENV.camera);
     let keyTab = TRACK.keypoints;
     let handTab = TRACK.handedness;
     try {
