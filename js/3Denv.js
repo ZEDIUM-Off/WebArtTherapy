@@ -1,11 +1,12 @@
 import * as HAND from './3DHand.js';
 import * as THREE from '../three.js/build/three.module.js';
 import { OrbitControls } from '../three.js/examples/jsm/controls/OrbitControls.js';
-import { FBXLoader } from '../three.js/examples/jsm/loaders/FBXLoader.js';
 import Stats from '../three.js/examples/jsm/libs/stats.module.js'
+// import { SimplifyModifier } from '../three.js/examples/jsm/modifiers/SimplifyModifier.js';
 
 
 const canvas = document.getElementById('can');
+// const modifier = new SimplifyModifier();
 
 const scene = new THREE.Scene()
 scene.add(new THREE.AxesHelper(5))
@@ -30,44 +31,17 @@ const controls = new OrbitControls(camera, renderer.domElement)
 controls.enableDamping = true
 controls.target.set(0, 1, 0)
 
-const material = new THREE.MeshNormalMaterial()
 
-const fbxLoader = new FBXLoader()
-fbxLoader.load(
-    '../ressources/handRigged1.fbx',
-    (object) => {
-        object.traverse(function(child) {
-            if (child.isMesh) {
-                child.material = material
-                if (child.material) {
-                    child.material.transparent = false
-                }
-            }
-        })
-        object.scale.set(-0.001, 0.001, -0.001);
-        scene.add(object);
-        // progressBar.style.display = 'none';
-    },
-    (xhr) => {
-        if (xhr.lengthComputable) {
-            // var percentComplete = (xhr.loaded / xhr.total) * 100;
-            // progressBar.value = percentComplete;
-            // progressBar.style.display = 'block';
-        }
-    },
-    (error) => {
-        console.log(error);
-    }
-)
 
-window.addEventListener('resize', onWindowResize, false);
 
-function onWindowResize() {
-    camera.aspect = window.innerWidth / window.innerHeight;
-    camera.updateProjectionMatrix();
-    renderer.setSize(window.innerWidth, window.innerHeight);
-    render();
-}
+// window.addEventListener('resize', onWindowResize, false);
+
+// function onWindowResize() {
+//     camera.aspect = window.innerWidth / window.innerHeight;
+//     camera.updateProjectionMatrix();
+//     renderer.setSize(window.innerWidth, window.innerHeight);
+//     render();
+// }
 
 const stats = Stats()
 document.body.appendChild(stats.dom);
@@ -84,6 +58,7 @@ function animate() {
 
 function render() {
     renderer.render(scene, camera);
+    // skeleton.bones[0].rotation.x = 10;
 }
 
 animate();

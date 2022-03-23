@@ -1,0 +1,563 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Panda 3D Model</title>
+    <meta name="keywords" content=", Download, 3D Model">
+    <meta name="description" content="Kung-Fu Panda 3D Model Free Download">
+
+    <link rel="stylesheet" type="text/css" href="css/style.css" />
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <script src="css/three4.js"></script>
+    <script src="css/Detector.js"></script>
+    <script src="css/OrbitControls.js"></script>
+    <script src="css/OBJLoader.js"></script>
+    <script src="css/MTLLoader_NoNormals.js"></script>
+    <script src="css/GLTFExporter.js"></script>
+    <script src="css/ColladaExporter.js"></script>
+    <script src="css/OBJExporter.js"></script>
+    <script src="css/SimplifyModifier.js"></script>
+
+    <script type="text/javascript" src="css/jquery.js"></script>
+
+    <style>
+        body {
+            overflow: hidden;
+            margin: 0;
+            padding: 0;
+            background: #dbeef4;
+            font-family: arial;
+        }
+        
+        .nospacing {
+            padding: 0;
+            margin: 0;
+            border: 0px;
+            border-collapse: collapse;
+            border-spacing: 0;
+            cellpadding: 0;
+            cellspacing: 0;
+        }
+        
+        .left,
+        .right {
+            position: absolute;
+            color: #fff;
+            font-family: Geneva, sans-serif;
+        }
+        
+        .left {
+            bottom: 1em;
+            left: 1em;
+            text-align: left;
+        }
+        
+        .a {
+            color: #f58231;
+            cursor: pointer;
+        }
+        
+        .a:hover {
+            color: #ff0000;
+        }
+        
+        .imgcontrolbtn {
+            opacity: 0.6;
+        }
+        
+        .imgcontrolbtn:hover {
+            opacity: 1.0;
+        }
+    </style>
+
+</head>
+
+<body>
+
+    <div id="rightpanelbuttons" style="position: absolute; top: 1em; right: 1em;">
+        <img id="btn-wireframe" src="img/btn-wireframe-d.png" title="Render Mode" class="imgcontrolbtn" width="40px" onclick="SetWireframe();"> <br>
+        <img id="btn-light" src="img/btn-light-e.png" title="Light On/Off" class="imgcontrolbtn" width="40px" onclick="SwitchLighting();"> <br><br>
+        <img id="btn-floor" src="img/btn-floor-d.png" title="Floor Options" class="imgcontrolbtn" width="40px" onclick="SwitchFloor();"> <br>
+        <img id="btn-skycolor" src="img/btn-skycolor-1.png" title="Background Color" class="imgcontrolbtn" width="40px" onclick="SwitchSkyColor();"> <br>
+        <br>
+
+    </div>
+
+    <div id="rightpanelbuttons" style="position: absolute; top: 15px; left: 20px; color: #000099; font-size: 24px; text-align: left; line-height:30px">
+        Reduction Level:
+        <aa1 id="CutPercentLvl"><b>60%</b></aa1><br>
+        <input type="submit" value="10%" class="submit" style="width: 55px; font-size: 20px; cursor: pointer; padding: 0px 0px 0px 0px;" onclick="SimplifyAgain(0.1);" />
+        <input type="submit" value="25%" class="submit" style="width: 55px; font-size: 20px; cursor: pointer; padding: 0px 0px 0px 0px;" onclick="SimplifyAgain(0.25);" />
+        <input type="submit" value="40%" class="submit" style="width: 55px; font-size: 20px; cursor: pointer; padding: 0px 0px 0px 0px;" onclick="SimplifyAgain(0.4);" />
+        <input type="submit" value="50%" class="submit" style="width: 55px; font-size: 20px; cursor: pointer; padding: 0px 0px 0px 0px;" onclick="SimplifyAgain(0.5);" />
+        <input type="submit" value="60%" class="submit" style="width: 55px; font-size: 20px; cursor: pointer; padding: 0px 0px 0px 0px;" onclick="SimplifyAgain(0.6);" />
+        <input type="submit" value="70%" class="submit" style="width: 55px; font-size: 20px; cursor: pointer; padding: 0px 0px 0px 0px;" onclick="SimplifyAgain(0.7);" />
+        <input type="submit" value="75%" class="submit" style="width: 55px; font-size: 20px; cursor: pointer; padding: 0px 0px 0px 0px;" onclick="SimplifyAgain(0.75);" />
+        <input type="submit" value="80%" class="submit" style="width: 55px; font-size: 20px; cursor: pointer; padding: 0px 0px 0px 0px;" onclick="SimplifyAgain(0.8);" />
+        <input type="submit" value="85%" class="submit" style="width: 55px; font-size: 20px; cursor: pointer; padding: 0px 0px 0px 0px;" onclick="SimplifyAgain(0.85);" />
+        <input type="submit" value="90%" class="submit" style="width: 55px; font-size: 20px; cursor: pointer; padding: 0px 0px 0px 0px;" onclick="SimplifyAgain(0.9);" />
+    </div>
+    <div id="rightpanelbuttons" style="position: absolute; bottom: 30px; left: 20px; color: #000099; font-size: 24px; text-align: left;">
+        <b><font size='5'>Export Formats:</font></b> <br>
+        <select id="SelectFormatID" style="color:#215968; font-size: 20px; height: 40px; font-weight: bold; ">
+	        <option value="3" >.OBJ (Wavefront Object)</option>
+	        <option value="2" >.DAE (Collada)</option>
+	        <option value="1" >.GLB</option>
+	        <option value="0" >.GLTF</option>
+	    </select>
+        <input type="submit" value="Download" class="submit2" style="width: 150px; font-size: 20px; height: 40px; border-radius: 10px;" onclick="ExportResultModel();" />
+    </div>
+
+    <div id="GroupsBox" style="position: absolute; top: 15px; left: 10px; margin: 0; padding: 0; display: none;">
+        Layers: <br> &nbsp; <input type="checkbox" id="layer-Po_eye.jpg" checked onclick="HideShowGroup('Po_eye.jpg', this.checked);"> Po_eye<br> &nbsp; <input type="checkbox" id="layer-Po.jpg" checked onclick="HideShowGroup('Po.jpg', this.checked);">        Po<br>
+    </div>
+
+    <div id="loadingx" style="position: absolute; top: 45%; right: 38%; color:grey; font-size:30px;">
+        Loading 3D Model ...
+    </div>
+
+    <script>
+        if (!Detector.webgl) {
+            Detector.addGetWebGLMessage();
+        }
+
+        var container;
+
+        var modifier = new THREE.SimplifyModifier();
+        var simplified;
+        var OrgFacesNum = 0;
+        var NewFacesNum = 0;
+
+        var camera, controls, scene, renderer;
+        var ambient, keyLight, fillLight, backLight;
+
+        var windowHalfX = window.innerWidth / 2;
+        var windowHalfY = window.innerHeight / 2;
+
+        var DefaultMaterials = new Array();
+        var wireframeMaterial;
+
+        var meshobject = new THREE.Object3D;
+        var objLoader;
+        var MeshGeometry = new Array();
+        var MeshGeometryOrg = new Array();
+        var floor1;
+        var floor2;
+
+        var ModelWireframe = 0;
+        var ModelLight = 0;
+        var ModelFloor = 0;
+        var ModelDoubleEye = 1;
+        var ModelSkyColor = 1;
+        var MaxX1 = 0;
+        var MaxZ1 = 0;
+        var MinY1 = 99;
+
+        var ZoomButton = 0;
+        var GroupsBoxVisible = 0;
+
+        init();
+        animate();
+
+        var onProgress1 = function(xhr) {
+            if (xhr.lengthComputable) {
+                var percentComplete = xhr.loaded / xhr.total * 100;
+                document.getElementById("loadingx").innerHTML = "Loading 3D Model " + Math.round(percentComplete, 2) + "%";
+            }
+        };
+        var onError1 = function(xhr) {
+            document.getElementById("loadingx").innerHTML = "Error in loading model.";
+        };
+
+
+        var link = document.createElement('a');
+        link.style.display = 'none';
+        document.body.appendChild(link); // Firefox workaround, see #6594
+        function save(blob, filename) {
+            link.href = URL.createObjectURL(blob);
+            link.download = filename;
+            link.click();
+        }
+
+        function saveString(text, filename) {
+            save(new Blob([text], {
+                type: 'text/plain'
+            }), filename);
+        }
+
+        function saveArrayBuffer(buffer, filename) {
+            save(new Blob([buffer], {
+                type: 'application/octet-stream'
+            }), filename);
+        }
+
+
+        function SwitchGroupsBox() {
+            if (GroupsBoxVisible == 0) {
+                GroupsBoxVisible = 1;
+                document.getElementById('GroupsBox').style.display = 'block';
+            } else {
+                GroupsBoxVisible = 0;
+                document.getElementById('GroupsBox').style.display = 'none';
+            }
+        }
+
+        function HideShowGroup(GroupMatName, HideShow) {
+            var LayerID1 = 0;
+            meshobject.traverse(function(child) {
+                if (child instanceof THREE.Mesh) {
+                    var n = child.material.name.includes(GroupMatName);
+
+                    var MatTex = objLoader.materials.getAsArray(0)[LayerID1].map.image.currentSrc;
+                    MatTex = MatTex.replace("rigmodels.com/3dmodels/5OOOEWDBCBR630L4R438TGJCD/Prev/", "");
+                    MatTex = MatTex.replace("http://", "");
+                    MatTex = MatTex.replace("https://", "");
+                    var n2 = MatTex.includes(GroupMatName);
+                    LayerID1++;
+
+                    if (n == true || n2 == true) child.visible = HideShow;
+                    if (GroupMatName == "default-grey.jpg") {
+                        var n = child.material.name.includes("color_");
+                        if (n == true) child.visible = HideShow;
+                    }
+                }
+            });
+        }
+
+        function SetWireframe() {
+            if (ModelWireframe == 0) {
+                meshobject.traverse(function(child) {
+                    if (child instanceof THREE.Mesh) {
+                        child.material = wireframeMaterial;
+                        child.material.side = THREE.FrontSide;
+                    }
+                });
+                document.getElementById("btn-wireframe").src = "img/btn-wireframe-e1.png";
+                ModelWireframe = 1;
+            } else if (ModelWireframe == 1) {
+                j = 0;
+                var cubeMaterial = new THREE.MeshLambertMaterial({
+                    color: 0xffffff,
+                    vertexColors: THREE.FaceColors
+                });
+                meshobject.traverse(function(child) {
+                    if (child instanceof THREE.Mesh) {
+                        child.material = cubeMaterial;
+                        if (ModelDoubleEye == 1) {
+                            child.material.side = THREE.DoubleSide;
+                        } else {
+                            child.material.side = THREE.FrontSide;
+                        }
+                        var gem = MeshGeometry[j];
+                        for (var i = 0; i < gem.faces.length; i++) {
+                            gem.faces[i].color.setRGB(Math.random(), Math.random(), Math.random());
+                        }
+                        child.geometry = new THREE.BufferGeometry().fromGeometry(gem);
+                        j++;
+                    }
+                });
+                document.getElementById("btn-wireframe").src = "img/btn-wireframe-c.png";
+                ModelWireframe = 2;
+            } else if (ModelWireframe == 2) {
+                j = 0;
+                meshobject.traverse(function(child) {
+                    if (child instanceof THREE.Mesh) {
+                        child.material = DefaultMaterials[j];
+                        if (ModelDoubleEye == 1) {
+                            child.material.side = THREE.DoubleSide;
+                        } else {
+                            child.material.side = THREE.FrontSide;
+                        }
+                        j++;
+                    }
+                });
+                document.getElementById("btn-wireframe").src = "img/btn-wireframe-d.png";
+                ModelWireframe = 0;
+            }
+        }
+
+        function SwitchFloor() {
+            if (ModelFloor == 0) {
+                floor1.visible = true;
+                ModelFloor = 1;
+                document.getElementById("btn-floor").src = "img/btn-floor-e1.png";
+            } else if (ModelFloor == 1) {
+                floor1.visible = false;
+                floor2.visible = true;
+                ModelFloor = 2;
+                document.getElementById("btn-floor").src = "img/btn-floor-e2.png";
+            } else if (ModelFloor == 2) {
+                floor1.visible = false;
+                floor2.visible = false;
+                ModelFloor = 0;
+                document.getElementById("btn-floor").src = "img/btn-floor-d.png";
+            }
+        }
+
+        function SwitchDoubleEye() {
+            if (ModelDoubleEye == 0) {
+                meshobject.traverse(function(child) {
+                    if (child instanceof THREE.Mesh) {
+                        child.material.side = THREE.DoubleSide;
+                        j++;
+                    }
+                });
+                ModelDoubleEye = 1;
+                document.getElementById("btn-eye").src = "img/btn-eye-e.png";
+            } else {
+                meshobject.traverse(function(child) {
+                    if (child instanceof THREE.Mesh) {
+                        child.material.side = THREE.FrontSide;
+                        j++;
+                    }
+                });
+                ModelDoubleEye = 0;
+                document.getElementById("btn-eye").src = "img/btn-eye-d.png";
+            }
+        }
+
+        function SwitchSkyColor() {
+            if (ModelSkyColor == 1) {
+                ModelSkyColor = 2;
+                renderer.setClearColor(new THREE.Color("rgb(0, 0, 0)"));
+            } else if (ModelSkyColor == 2) {
+                ModelSkyColor = 3;
+                renderer.setClearColor(new THREE.Color("rgb(255, 0, 0)"));
+            } else if (ModelSkyColor == 3) {
+                ModelSkyColor = 4;
+                renderer.setClearColor(new THREE.Color("rgb(0, 255, 0)"));
+            } else if (ModelSkyColor == 4) {
+                ModelSkyColor = 5;
+                renderer.setClearColor(new THREE.Color("rgb(0, 0, 255)"));
+            } else if (ModelSkyColor == 5) {
+                ModelSkyColor = 6;
+                renderer.setClearColor(new THREE.Color("rgb(255, 255, 255)"));
+            } else {
+                ModelSkyColor = 1;
+                renderer.setClearColor(new THREE.Color("rgb(219, 238, 244)"));
+            }
+            document.getElementById("btn-skycolor").src = "img/btn-skycolor-" + ModelSkyColor + ".png";
+        }
+
+        function SwitchLighting() {
+            if (ModelLight == 0) {
+                ambient.intensity = 0.8;
+                scene.add(keyLight);
+                scene.add(fillLight);
+                scene.add(backLight);
+                ModelLight = 1;
+                document.getElementById("btn-light").src = "img/btn-light-e.png";
+            } else {
+                ambient.intensity = 1.5;
+                scene.remove(keyLight);
+                scene.remove(fillLight);
+                scene.remove(backLight);
+                ModelLight = 0;
+                document.getElementById("btn-light").src = "img/btn-light-d.png";
+            }
+        }
+
+        function ExportResultModel() {
+            var ExportFormatID = document.getElementById("SelectFormatID").value;
+            switch (ExportFormatID) {
+                case "0":
+                    exportGLTF(meshobject, false);
+                    break;
+                case "1":
+                    exportGLTF(meshobject, true);
+                    break;
+                case "2":
+                    ExportCollada(meshobject);
+                    break;
+                case "3":
+                    ExportOBJ(meshobject);
+                    break;
+            }
+        }
+
+        function SimplifyAgain(PercentVal) {
+            document.getElementById("CutPercentLvl").innerHTML = "...";
+            setTimeout(function() {
+                scene.remove(meshobject);
+                meshobject = new THREE.Object3D();
+                NewFacesNum = 0;
+                for (var j = 0; j < MeshGeometryOrg.length; j++) {
+                    MeshGeometry[j].dispose();
+                    MeshGeometry[j] = modifier.modify(MeshGeometryOrg[j], PercentVal, true);
+                    NewFacesNum = NewFacesNum + MeshGeometry[j].faces.length;
+                    meshobject.add(new THREE.Mesh(MeshGeometry[j], DefaultMaterials[j]));
+                    MeshGeometry[j].dispose();
+                }
+                scene.add(meshobject);
+                document.getElementById("CutPercentLvl").innerHTML = "<b>" + PercentVal * 100 + "%</b> <font color='grey'> (<b>" + OrgFacesNum + "</b> to <b>" + NewFacesNum + "</b> polygons)</font>";
+
+                if (ModelWireframe != 0) {
+                    ModelWireframe--;
+                    if (ModelWireframe == -1) ModelWireframe = 2;
+                    SetWireframe();
+                }
+
+            }, 100);
+        }
+
+        function init() {
+            container = document.createElement('div');
+            document.body.appendChild(container);
+
+            /* Camera */
+            camera = new THREE.PerspectiveCamera(50, window.innerWidth / window.innerHeight, 0.01, 3000);
+            camera.position.x = -3;
+
+            /* Scene */
+            scene = new THREE.Scene();
+
+            ambient = new THREE.AmbientLight(0xffffff, 1.0);
+            scene.add(ambient);
+
+            keyLight = new THREE.DirectionalLight(new THREE.Color('hsl(30, 100%, 75%)'), 1.0);
+            keyLight.position.set(-100, 10, 100);
+            fillLight = new THREE.DirectionalLight(new THREE.Color('hsl(240, 100%, 75%)'), 0.75);
+            fillLight.position.set(100, 10, 100);
+            backLight = new THREE.DirectionalLight(0xffffff, 1.0);
+            backLight.position.set(100, 100, -100).normalize();
+            ModelLight = 1;
+            SwitchLighting();
+
+            /* Model */
+            wireframeMaterial = new THREE.MeshBasicMaterial({
+                color: 0x00ee00,
+                wireframe: true,
+                transparent: true
+            });
+
+            var mtlLoader = new THREE.MTLLoader();
+            mtlLoader.setPath('3dmodels/5OOOEWDBCBR630L4R438TGJCD/Prev/');
+            mtlLoader.load('5OOOEWDBCBR630L4R438TGJCD.mtl?rnd=7961', function(materials) {
+                materials.preload();
+
+                objLoader = new THREE.OBJLoader();
+                objLoader.setMaterials(materials);
+                objLoader.setPath('3dmodels/5OOOEWDBCBR630L4R438TGJCD/Prev/');
+                objLoader.load('5OOOEWDBCBR630L4R438TGJCD.obj', function(object) {
+                    j = 0;
+                    object.traverse(function(child) {
+                        if (child instanceof THREE.Mesh) {
+                            child.material.side = THREE.DoubleSide;
+                            MeshGeometryOrg[j] = new THREE.Geometry().fromBufferGeometry(child.geometry);
+
+                            OrgFacesNum = OrgFacesNum + MeshGeometryOrg[j].faces.length;
+
+                            MeshGeometry[j] = modifier.modify(MeshGeometryOrg[j], 0.6, true);
+
+                            NewFacesNum = NewFacesNum + MeshGeometry[j].faces.length;
+
+                            DefaultMaterials.push(child.material);
+
+                            MeshGeometryOrg[j].computeBoundingBox();
+                            if (MaxX1 <= MeshGeometryOrg[j].boundingBox.max.x) MaxX1 = MeshGeometryOrg[j].boundingBox.max.x;
+                            if (MaxZ1 <= MeshGeometryOrg[j].boundingBox.max.z) MaxZ1 = MeshGeometryOrg[j].boundingBox.max.z;
+                            if (MinY1 >= MeshGeometryOrg[j].boundingBox.min.y) MinY1 = MeshGeometryOrg[j].boundingBox.min.y;
+
+                            meshobject.add(new THREE.Mesh(MeshGeometry[j], DefaultMaterials[j]));
+
+                            MeshGeometry[j].dispose();
+                            j++;
+                        }
+                    });
+
+                    document.getElementById("CutPercentLvl").innerHTML = "<b>60%</b> <font color='grey'> (<b>" + OrgFacesNum + "</b> to <b>" + NewFacesNum + "</b> polygons)</font>";
+                    //alert(OrgFacesNum + " to " + NewFacesNum);
+                    scene.add(meshobject);
+
+                    // FLOOR
+                    var floorTexture = new THREE.ImageUtils.loadTexture('img/floor.jpg');
+                    floorTexture.wrapS = floorTexture.wrapT = THREE.RepeatWrapping;
+                    floorTexture.repeat.set(4, 4 * MaxZ1 / MaxX1);
+                    var floorMaterial = new THREE.MeshBasicMaterial({
+                        map: floorTexture,
+                        side: THREE.BackSide
+                    });
+                    var floorGeometry = new THREE.PlaneGeometry(MaxX1 * 2, MaxZ1 * 2, 1, 1);
+                    floor1 = new THREE.Mesh(floorGeometry, floorMaterial);
+                    floor1.position.y = MinY1;
+                    floor1.rotation.x = Math.PI / 2;
+                    floor1.visible = false;
+                    scene.add(floor1);
+                    var floorTexture2 = new THREE.ImageUtils.loadTexture('img/floor.png');
+                    floorTexture2.wrapS = floorTexture2.wrapT = THREE.RepeatWrapping;
+                    floorTexture2.repeat.set(40, 40);
+                    var floorMaterial2 = new THREE.MeshBasicMaterial({
+                        map: floorTexture2,
+                        transparent: true,
+                        overdraw: true,
+                        side: THREE.BackSide
+                    });
+                    var floorGeometry2 = new THREE.PlaneGeometry(10, 10, 1, 1);
+                    floor2 = new THREE.Mesh(floorGeometry2, floorMaterial2);
+                    floor2.position.y = MinY1;
+                    floor2.rotation.x = Math.PI / 2;
+                    floor2.visible = false;
+                    scene.add(floor2);
+
+                    ModelFloor = 1;
+                    SwitchFloor();
+
+                    document.getElementById("loadingx").style.display = 'none';
+
+
+                }, onProgress1, onError1);
+
+            });
+
+            /* Renderer */
+            //renderer = new THREE.WebGLRenderer({preserveDrawingBuffer: true, alpha: true});
+            renderer = new THREE.WebGLRenderer({
+                preserveDrawingBuffer: true
+            });
+            renderer.setPixelRatio(window.devicePixelRatio);
+            renderer.setSize(window.innerWidth, window.innerHeight);
+            renderer.setClearColor(new THREE.Color("rgb(219, 238, 244)"));
+            container.appendChild(renderer.domElement);
+
+            /* Controls */
+            controls = new THREE.OrbitControls(camera, renderer.domElement);
+            controls.enableDamping = true;
+            controls.dampingFactor = 0.7;
+            controls.enableZoom = true;
+            controls.zoomSpeed = 2.0;
+
+            /* Events */
+            window.addEventListener('resize', onWindowResize, false);
+            window.addEventListener('keydown', onKeyboardEvent, false);
+        }
+
+        function onWindowResize() {
+            windowHalfX = window.innerWidth / 2;
+            windowHalfY = window.innerHeight / 2;
+            camera.aspect = window.innerWidth / window.innerHeight;
+            camera.updateProjectionMatrix();
+            renderer.setSize(window.innerWidth, window.innerHeight);
+        }
+
+        function onKeyboardEvent(e) {
+            if (e.code === 'KeyL') {
+                SwitchLighting();
+            }
+        }
+
+        function animate() {
+            if (ZoomButton > 0 && camera.fov > 5) camera.fov = camera.fov * 0.99;
+            if (ZoomButton < 0 && camera.fov < 90) camera.fov = camera.fov * 1.01;
+            if (ZoomButton != 0) camera.updateProjectionMatrix();
+            requestAnimationFrame(animate);
+            controls.update();
+            renderer.render(scene, camera);
+        }
+    </script>
+
+</body>
+
+</html>
