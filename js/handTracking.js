@@ -1,3 +1,5 @@
+import 'regenerator-runtime/runtime';
+
 const videoElement = document.getElementsByClassName('input_video')[0];
 const canvasElement = document.getElementsByClassName('output_canvas')[0];
 const canvasCtx = canvasElement.getContext('2d');
@@ -37,7 +39,7 @@ const hands = new Hands({
 });
 hands.setOptions({
     selfieMode: true,
-    maxNumHands: 1,
+    maxNumHands: 2,
     modelComplexity: 1,
     minDetectionConfidence: 0.5,
     minTrackingConfidence: 0.5
