@@ -1,26 +1,33 @@
 {
-  "name": "webarttherapyts",
-  "private": true,
-  "version": "0.0.0",
-  "scripts": {
-    "dev": "vite",
-    "build": "tsc && vite build",
-    "preview": "vite preview"
-  },
-  "devDependencies": {
-    "@types/node": "^17.0.23",
-    "typescript": "^4.5.4",
-    "vite": "^2.9.0"
-  },
-  "dependencies": {
-    "@babylonjs/core": "^5.1.0",
-    "@mediapipe/camera_utils": "^0.3.1640029074",
-    "@mediapipe/control_utils": "^0.6.1629159505",
-    "@mediapipe/drawing_utils": "^0.3.1620248257",
-    "@mediapipe/hands": "^0.4.1646424915",
-    "@types/ammo.js": "github:osman-turan/ammo.js-typings",
-    "ammo.js": "github:kripken/ammo.js",
-    "ammojs-typed": "^1.0.6",
-    "babylonjs": "^5.1.0"
-  }
+    "name": "webarttherapyts",
+    "private": true,
+    "version": "0.0.0",
+    "scripts": {
+        "dev": "vite",
+        "build": "tsc && vite build",
+        "preview": "vite preview"
+    },
+    "devDependencies": {
+        "@types/node": "^17.0.23",
+        "typescript": "^4.5.4",
+        "vite": "^2.9.0"
+    },
+    "dependencies": {
+        "@babylonjs/core": "^5.1.0",
+        "@mediapipe/camera_utils": "^0.3.1640029074",
+        "@mediapipe/control_utils": "^0.6.1629159505",
+        "@mediapipe/drawing_utils": "^0.3.1620248257",
+        "@mediapipe/hands": "^0.4.1646424915",
+        "@tensorflow-models/hand-pose-detection": "^2.0.0",
+        "@tensorflow/tfjs-backend-webgl": "^3.15.0",
+        "@tensorflow/tfjs-converter": "^3.15.0",
+        "@tensorflow/tfjs-core": "^3.15.0",
+        "@types/ammo.js": "github:osman-turan/ammo.js-typings",
+        "@types/cannon": "^0.1.8",
+        "ammo.js": "github:kripken/ammo.js",
+        "ammojs-typed": "github:giniedp/ammojs-typed",
+        "babylonjs": "^5.1.0",
+        "cannon": "github:schteppe/cannon.js",
+        "regenerator-runtime": "^0.13.9"
+    }
 }

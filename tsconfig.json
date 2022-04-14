@@ -4,7 +4,7 @@
     "useDefineForClassFields": true,
     "module": "ESNext",
     "lib": ["ESNext", "DOM"],
-    "moduleResolution": "Node",
+    "moduleResolution": "node",
     "strict": true,
     "sourceMap": true,
     "resolveJsonModule": true,
@@ -14,8 +14,9 @@
     "noUnusedParameters": true,
     "noImplicitReturns": true,
     "noImplicitAny": true,
-    "types" :["node"],
+    "types" :["node","babylonjs","ammojs-typed"],
+    "allowSyntheticDefaultImports": true,
   },
-  "include": ["src"]
+  "include": ["src"],
   
 }
