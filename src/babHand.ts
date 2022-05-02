@@ -3,25 +3,29 @@ import * as TRACK from './mpHandTracking';
 import * as BABYLON from 'babylonjs';
 
 import * as mpHands from '@mediapipe/hands';
+import { getSystemErrorMap } from 'util';
 
 let RhandIsInit = false;
 let LhandIsInit = false;
 let handList : Array<string> = [];
 let body : HTMLBodyElement = document.getElementById("body") as HTMLBodyElement;
+let joined = false;
+var joint1 : BABYLON.PhysicsJoint = new BABYLON.PhysicsJoint(BABYLON.PhysicsJoint.LockJoint, {});
 
 
 export function handListing() {
-    let keyTab = TRACK.keypoints;
+    let keyTab = TRACK.locksKeypoints;
+    let posTab = TRACK.keypoints;
     let handTab = TRACK.handedness;
     try {
         if (handTab.length > 0 && keyTab.length > 0) {
             if (handTab.length === 1 && keyTab.length === 1) {
                 body.style.backgroundColor = "green";
                 removeHand(keyTab, handTab);
-                actiontHand(keyTab, handTab);
+                actiontHand(keyTab, handTab,posTab);
             } else if (handTab.length === 2 && keyTab.length === 2) {
                 body.style.backgroundColor = "blue";
-                actiontHand(keyTab, handTab);
+                actiontHand(keyTab, handTab,posTab);
             }
             setTimeout(() => { handListing(); }, 10);
         } else if (handTab.length === 0 && keyTab.length === 0) {
@@ -63,12 +67,15 @@ export function initHand(keys : mpHands.NormalizedLandmarkList[], index : number
 }
 
 // move hand 
-function moveHand(keys :mpHands.NormalizedLandmarkList[], index : number, side : string) {
+function moveHand(keys :mpHands.NormalizedLandmarkList[], index : number, side : string, pos : mpHands.NormalizedLandmarkList[]) {
     let keypoints :mpHands.NormalizedLandmark[] = [];
+    let posTab :mpHands.NormalizedLandmark[] = [];
     let name : string;
-    if (keys != undefined && index != undefined) {
+    if (keys != undefined && index != undefined && pos != undefined) {
         keypoints = keys[index];
         grab(keypoints[4], keypoints[8]);
+        posTab = pos[index];
+        console.log(posTab[0]);
     }
     // update spheres position
     for (let i = 0; i < keypoints.length; i++) {
@@ -76,7 +83,7 @@ function moveHand(keys :mpHands.NormalizedLandmarkList[], index : number, side :
         name += i.toString();
         let sphere  = BENV.scene.getMeshByName(name);
         if (sphere != null) {
-            sphere.position.set(-2 * keypoints[i].x +1, 1 + (-2) * keypoints[i].y, 2**2 * keypoints[i].z+0.2);
+            sphere.position.set(2.5 + (-5)* keypoints[i].x + posTab[0].x*(-5), 5 + (-5) * keypoints[i].y + posTab[0].y*(-5), 5 * keypoints[i].z + posTab[0].z *((-10)**7));
         }
     }
 }
@@ -113,13 +120,13 @@ function removeHand(keyTab : mpHands.NormalizedLandmarkList[], handTab : mpHands
             name += i.toString();
             let sphere = BENV.scene.getMeshByName(name);
             if(sphere != null) {
-            BENV.scene.removeMesh(sphere);
+            sphere.dispose();
             }
         }
     }
 }
 
-function actiontHand(keyTab : mpHands.NormalizedLandmarkList[], handTab: mpHands.Handedness[]) {
+function actiontHand(keyTab : mpHands.NormalizedLandmarkList[], handTab: mpHands.Handedness[] ,posTab : mpHands.NormalizedLandmarkList[]) {
     for (let i = 0; i < handTab.length; i++) {
         if (handTab[i].label === "Left") {
             if (!LhandIsInit) {
@@ -127,14 +134,14 @@ function actiontHand(keyTab : mpHands.NormalizedLandmarkList[], handTab: mpHands
                 LhandIsInit = true;
                 handList.push(handTab[i].label);
             } else {
-                moveHand(keyTab, i, handTab[i].label);
+                moveHand(keyTab, i, handTab[i].label,posTab);
             }
         } else if (!RhandIsInit) {
             initHand(keyTab, i, handTab[i].label);
             RhandIsInit = true;
             handList.push(handTab[i].label);
         } else {
-            moveHand(keyTab, i, handTab[i].label);
+            moveHand(keyTab, i, handTab[i].label,posTab);
         }
     }
 }
@@ -156,23 +163,25 @@ function pinched(posThumb : mpHands.NormalizedLandmark, posIndex : mpHands.Norma
     }
 }
 
-function grab(posThumb : mpHands.NormalizedLandmark, posIndex : mpHands.NormalizedLandmark) {
+function grab(posThumb : mpHands.NormalizedLandmark, posIndex : mpHands.NormalizedLandmark ) {
     let thumb = BENV.scene.getMeshByName("RightSphere4");
     let box = BENV.scene.getMeshByName("box");
-    var joint1 : BABYLON.PhysicsJoint = new BABYLON.PhysicsJoint(BABYLON.PhysicsJoint.LockJoint, {});
     var phyEngine = BENV.scene.getPhysicsEngine(); 
+
 
     if(box != null && thumb != null){
         let distance = Math.sqrt(Math.pow(thumb.position.x - box.position.x, 2) + Math.pow(thumb.position.y- box.position.y, 2) + Math.pow(thumb.position.z - box.position.z, 2));  
-        
         if (pinched(posThumb, posIndex)) {
-            if(distance < 0.3 && thumb.physicsImpostor != null && box.physicsImpostor != null){ 
+            if(distance < 0.3 && thumb.physicsImpostor != null && box.physicsImpostor != null && !joined){ 
                 thumb.physicsImpostor.addJoint(box.physicsImpostor, joint1);
-                console.log("joined");
+                joined = true; 
+                // console.log(joined);   
             } 
         }else if(phyEngine != null && thumb.physicsImpostor != null && box.physicsImpostor != null){
             phyEngine.removeJoint(thumb.physicsImpostor, box.physicsImpostor , joint1);
-            console.log("remove");
+            joined = false;
+            // console.log("not joined");
+            // console.log(phyEngine);
         }
     }
 }

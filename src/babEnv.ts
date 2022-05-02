@@ -66,20 +66,14 @@ export function create_babylon() {
     engine.runRenderLoop(function() {
         if (sceneToRender)
             if (sceneToRender.activeCamera) {
-
-                {   
-    // console.log(tfHands.hands[0].keypoints3D);
-
-                    BHAND.handListing();
-                    sceneToRender.render();
-                    scene.onPointerUp = function() {
-                        box.position.set(0,2,0);
-                        box.rotation.set(0,0,0);
-                    }    
+                BHAND.handListing();
+                sceneToRender.render();
+                scene.onPointerUp = function() {
+                    box.position.set(0,2,0);
+                    box.rotation.set(0,0,0);  
                 }
-            }
-    });
-
+            } 
+        });
     // Resize
     window.addEventListener("resize", function() {
         engine.resize();
