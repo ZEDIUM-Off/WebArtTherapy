@@ -20,20 +20,11 @@
         "@mediapipe/control_utils": "^0.6.1629159505",
         "@mediapipe/drawing_utils": "^0.3.1620248257",
         "@mediapipe/hands": "^0.4.1646424915",
-        "@tensorflow-models/hand-pose-detection": "^2.0.0",
-        "@tensorflow/tfjs-backend-webgl": "^3.15.0",
-        "@tensorflow/tfjs-converter": "^3.15.0",
-        "@tensorflow/tfjs-core": "^3.15.0",
-        "@types/ammo.js": "github:osman-turan/ammo.js-typings",
         "@types/cannon": "^0.1.8",
-        "ammo.js": "github:kripken/ammo.js",
-        "ammojs-typed": "github:giniedp/ammojs-typed",
         "babylonjs": "^5.1.0",
-        "browserify-middleware": "^8.1.1",
         "cannon": "github:schteppe/cannon.js",
         "express": "^4.18.1",
-        "regenerator-runtime": "^0.13.9",
-        "socket.io": "^4.5.0"
+        "regenerator-runtime": "^0.13.9"
     },
     "type": "module"
 }
