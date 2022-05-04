@@ -5,7 +5,8 @@
     <meta charset="UTF-8">
     <!-- <meta http-equiv="X-UA-Compatible" content="IE=edge"> -->
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cécile CHENAVAS - Art-thérapie & Numérique</title>
+    <!-- <title>Cécile CHENAVAS - Art-thérapie & Numérique</title> -->
+    <link rel="stylesheet" href="style/global-style.css">
 </head>
 
 <body id="body">
@@ -16,8 +17,11 @@
     <div>
         <canvas id="renderCanvas"></canvas>
     </div>
-    <!-- <script src="./node_modules/ammo.js/builds/ammo.js"></script> -->
     <script type="module" src="./src/main.ts"></script>
+    <script src="/socket.io/socket.io.js"></script>
+    <script>
+        var socket = io();
+    </script>
 </body>
 
 </html>

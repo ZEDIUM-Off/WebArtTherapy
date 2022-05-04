@@ -1,6 +1,4 @@
-import "../style/global-style.css";
-// import 'regenerator-runtime/runtime';
-import CANNON, { Box } from 'cannon';
+import CANNON from 'cannon';
 import * as BABYLON from 'babylonjs';
 import * as BHAND from './babHand';
 // import * as tfHands from './tfHandTracking';

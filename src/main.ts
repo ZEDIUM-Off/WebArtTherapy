@@ -1,7 +1,7 @@
 console.log('loading...');
 import * as BENV from './babEnv';
 import * as BABYLON from 'babylonjs';
-//import ammojs 
+import "../style/global-style.css";
 import 'regenerator-runtime/runtime';
 
 

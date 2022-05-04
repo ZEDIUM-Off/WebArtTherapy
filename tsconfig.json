@@ -14,9 +14,9 @@
     "noUnusedParameters": true,
     "noImplicitReturns": true,
     "noImplicitAny": true,
-    "types" :["node","babylonjs","ammojs-typed"],
+    "types" :["node","babylonjs"],
     "allowSyntheticDefaultImports": true,
   },
-  "include": ["src"],
+  "include": ["src", "server.js"],
   
 }
