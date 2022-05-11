@@ -16,13 +16,13 @@ const videoElement : HTMLVideoElement = document.getElementsByClassName('input_v
 /**
  * @description This variable is used to output the video stream after tracking process.
  * @type HTMLVideoElement
-*/
+ */
 const canvasElement : HTMLCanvasElement= document.getElementsByClassName('output_canvas')[0] as HTMLCanvasElement;
 
 /**
  * @description This variable is used to render the 'Hand overlay' on the video stream.
  * @type HTMLCanvasElement
-*/
+ */
 const canvasCtx : CanvasRenderingContext2D = canvasElement.getContext('2d') as CanvasRenderingContext2D;
 
 
@@ -45,7 +45,7 @@ export let handedness : mpHands.Handedness[] = [];
 /**
  * @description
  * @param results : {@link mpHands.Results}
- * 
+ *
  */
 function onResults(results : mpHands.Results) {
     canvasCtx.save();

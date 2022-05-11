@@ -5,19 +5,19 @@ import * as BHAND from './babHand';
 
 
 
-//declare variable scene type BABYLON.Scene
+// declare variable scene type BABYLON.Scene
 export let scene: BABYLON.Scene;
 let box : BABYLON.Mesh;
-let boxIsCreated : boolean = false;
+// let boxIsCreated : boolean = false;
 
 export function create_babylon() {
-    var canvas : HTMLCanvasElement ;
-    //get canvas by id
-    canvas = <HTMLCanvasElement> document.getElementById("renderCanvas");
-    var engine : BABYLON.Engine;
-    var sceneToRender : BABYLON.Scene;
-    var createDefaultEngine = function() { return new BABYLON.Engine(canvas, true, { preserveDrawingBuffer: true, stencil: true, disableWebGL2Support: false }); };
-    const createScene = function() {
+    let canvas : HTMLCanvasElement ;
+    // get canvas by id
+    canvas = (document.getElementById("renderCanvas") as HTMLCanvasElement);
+    let engine : BABYLON.Engine;
+    let sceneToRender : BABYLON.Scene;
+    const createDefaultEngine = () => { return new BABYLON.Engine(canvas, true, { preserveDrawingBuffer: true, stencil: true, disableWebGL2Support: false }); };
+    const createScene = () => {
 
         // Create a basic BJS Scene object.
         scene = new BABYLON.Scene(engine);
@@ -26,7 +26,7 @@ export function create_babylon() {
         scene.enablePhysics(new BABYLON.Vector3(0,-9.81,0), new BABYLON.CannonJSPlugin(true, 1,CANNON));
 
         // Create a FreeCamera, and set its position to (x:0, y:5, z:10).
-        var camera = new BABYLON.FreeCamera("camera1", new BABYLON.Vector3(0, 5, 10), scene);
+        const camera = new BABYLON.FreeCamera("camera1", new BABYLON.Vector3(0, 5, 10), scene);
         camera.setTarget(BABYLON.Vector3.Zero());
         camera.attachControl(canvas, true);
 
@@ -36,8 +36,9 @@ export function create_babylon() {
             new BABYLON.Vector3(1, 1, 0),
             scene, // Always pass this argument explicitly
         );
+        light.setEnabled(true);
 
-        //Create a ground mesh
+        // Create a ground mesh
         const ground = BABYLON.MeshBuilder.CreateBox("ground", { height:2 , width: 20, depth: 10}, scene);
         ground.position.y = -2;
         ground.physicsImpostor = new BABYLON.PhysicsImpostor(ground, BABYLON.PhysicsImpostor.BoxImpostor, { mass: 0, friction: 1,restitution : 0.2}, scene);
@@ -61,19 +62,19 @@ export function create_babylon() {
     scene = createScene();
 
     sceneToRender = scene;
-    engine.runRenderLoop(function() {
+    engine.runRenderLoop(() => {
         if (sceneToRender)
             if (sceneToRender.activeCamera) {
                 BHAND.handListing();
                 sceneToRender.render();
-                scene.onPointerUp = function() {
+                scene.onPointerUp = () =>{
                     box.position.set(0,2,0);
-                    box.rotation.set(0,0,0);  
+                    box.rotation.set(0,0,0);
                 }
-            } 
+            }
         });
     // Resize
-    window.addEventListener("resize", function() {
+    window.addEventListener("resize", () => {
         engine.resize();
     });
     // scene.debugLayer.show();

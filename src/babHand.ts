@@ -1,22 +1,20 @@
 import * as BENV from './babEnv';
 import * as TRACK from './mpHandTracking';
 import * as BABYLON from 'babylonjs';
-
 import * as mpHands from '@mediapipe/hands';
-import { getSystemErrorMap } from 'util';
 
 let RhandIsInit = false;
 let LhandIsInit = false;
-let handList : Array<string> = [];
-let body : HTMLBodyElement = document.getElementById("body") as HTMLBodyElement;
+let handList : string[] = [];
+const body : HTMLBodyElement = document.getElementById("body") as HTMLBodyElement;
 let joined = false;
-var joint1 : BABYLON.PhysicsJoint = new BABYLON.PhysicsJoint(BABYLON.PhysicsJoint.LockJoint, {});
+const joint1 : BABYLON.PhysicsJoint = new BABYLON.PhysicsJoint(BABYLON.PhysicsJoint.LockJoint, {});
 
 
 export function handListing() {
-    let keyTab = TRACK.locksKeypoints;
-    let posTab = TRACK.keypoints;
-    let handTab = TRACK.handedness;
+    const keyTab = TRACK.locksKeypoints;
+    const posTab = TRACK.keypoints;
+    const handTab = TRACK.handedness;
     try {
         if (handTab.length > 0 && keyTab.length > 0) {
             if (handTab.length === 1 && keyTab.length === 1) {
@@ -47,17 +45,17 @@ export function initHand(keys : mpHands.NormalizedLandmarkList[], index : number
     const lMat = new BABYLON.StandardMaterial("lMat", BENV.scene);
     lMat.diffuseColor = new BABYLON.Color3(1, 0, 0);
 
-    if (keys != undefined && index != undefined) {
+    if (keys !== undefined && index !== undefined) {
         keypoints = keys[index];
     }
     for (let i = 0; i < keypoints.length; i++) {
         name = side + "Sphere";
         name += i.toString();
-        let sphere = BABYLON.MeshBuilder.CreateSphere(name, { diameter: 0.1, updatable: true, segments: 1 }, BENV.scene);
+        const sphere = BABYLON.MeshBuilder.CreateSphere(name, { diameter: 0.1, updatable: true, segments: 1 }, BENV.scene);
         if(sphere != null){
         sphere.physicsImpostor = new BABYLON.PhysicsImpostor(sphere, BABYLON.PhysicsImpostor.SphereImpostor, { mass:0 }, BENV.scene);
             if( side === "Right" ){
-                
+
                 sphere.material = rMat;
             }else{
                 sphere.material = lMat;
@@ -66,12 +64,12 @@ export function initHand(keys : mpHands.NormalizedLandmarkList[], index : number
     }
 }
 
-// move hand 
+// move hand
 function moveHand(keys :mpHands.NormalizedLandmarkList[], index : number, side : string, pos : mpHands.NormalizedLandmarkList[]) {
     let keypoints :mpHands.NormalizedLandmark[] = [];
     let posTab :mpHands.NormalizedLandmark[] = [];
     let name : string;
-    if (keys != undefined && index != undefined && pos != undefined) {
+    if (keys !== undefined && index !== undefined && pos !== undefined) {
         keypoints = keys[index];
         grab(keypoints[4], keypoints[8]);
         posTab = pos[index];
@@ -81,9 +79,9 @@ function moveHand(keys :mpHands.NormalizedLandmarkList[], index : number, side :
     for (let i = 0; i < keypoints.length; i++) {
         name = side + "Sphere";
         name += i.toString();
-        let sphere  = BENV.scene.getMeshByName(name);
+        const sphere  = BENV.scene.getMeshByName(name);
         if (sphere != null) {
-            sphere.position.set(2.5 + (-5)* keypoints[i].x + posTab[0].x*(-5), 5 + (-5) * keypoints[i].y + posTab[0].y*(-5), 5 * keypoints[i].z + posTab[0].z *((-10)**7));
+            sphere.position.set(2.5 + (-5)* keypoints[i].x + posTab[0].x*(-5), 2+ (-5) * keypoints[i].y + posTab[0].y*(-5), 5 * keypoints[i].z );
         }
     }
 }
@@ -91,13 +89,13 @@ function moveHand(keys :mpHands.NormalizedLandmarkList[], index : number, side :
 function removeHand(keyTab : mpHands.NormalizedLandmarkList[], handTab : mpHands.Handedness[]) {
     let name;
     if (keyTab.length === 0 && handTab.length === 0) {
-        for (let j of handList) {
+        for (const j of handList) {
             name = j + "Sphere";
-            let fixName = name;
+            const fixName = name;
             for (let i = 0; i < 21; i++) {
                 name = fixName;
                 name += i.toString();
-                let sphere = BENV.scene.getMeshByName(name);
+                const sphere = BENV.scene.getMeshByName(name);
                 if(sphere != null) {
                 sphere.dispose();
                 }
@@ -114,11 +112,11 @@ function removeHand(keyTab : mpHands.NormalizedLandmarkList[], handTab : mpHands
             name = "LeftSphere";
             LhandIsInit = false;
         }
-        let fixName = name;
+        const fixName = name;
         for (let i = 0; i < keyTab[0].length; i++) {
             name = fixName;
             name += i.toString();
-            let sphere = BENV.scene.getMeshByName(name);
+            const sphere = BENV.scene.getMeshByName(name);
             if(sphere != null) {
             sphere.dispose();
             }
@@ -147,15 +145,15 @@ function actiontHand(keyTab : mpHands.NormalizedLandmarkList[], handTab: mpHands
 }
 
 function pinched(posThumb : mpHands.NormalizedLandmark, posIndex : mpHands.NormalizedLandmark) {
-    let thumb = posThumb;
-    let index = posIndex;
-    let thumbX = thumb.x;
-    let thumbY = thumb.y;
-    let thumbZ = thumb.z;
-    let indexX = index.x;
-    let indexY = index.y;
-    let indexZ = index.z;
-    let distance = Math.sqrt(Math.pow(thumbX - indexX, 2) + Math.pow(thumbY - indexY, 2) + Math.pow(thumbZ - indexZ, 2));
+    const thumb = posThumb;
+    const index = posIndex;
+    const thumbX = thumb.x;
+    const thumbY = thumb.y;
+    const thumbZ = thumb.z;
+    const indexX = index.x;
+    const indexY = index.y;
+    const indexZ = index.z;
+    const distance = Math.sqrt(Math.pow(thumbX - indexX, 2) + Math.pow(thumbY - indexY, 2) + Math.pow(thumbZ - indexZ, 2));
     if (distance < 0.1) {
         return true;
     } else {
@@ -164,19 +162,19 @@ function pinched(posThumb : mpHands.NormalizedLandmark, posIndex : mpHands.Norma
 }
 
 function grab(posThumb : mpHands.NormalizedLandmark, posIndex : mpHands.NormalizedLandmark ) {
-    let thumb = BENV.scene.getMeshByName("RightSphere4");
-    let box = BENV.scene.getMeshByName("box");
-    var phyEngine = BENV.scene.getPhysicsEngine(); 
+    const thumb = BENV.scene.getMeshByName("RightSphere4");
+    const box = BENV.scene.getMeshByName("box");
+    const phyEngine = BENV.scene.getPhysicsEngine();
 
 
     if(box != null && thumb != null){
-        let distance = Math.sqrt(Math.pow(thumb.position.x - box.position.x, 2) + Math.pow(thumb.position.y- box.position.y, 2) + Math.pow(thumb.position.z - box.position.z, 2));  
+        const distance = Math.sqrt(Math.pow(thumb.position.x - box.position.x, 2) + Math.pow(thumb.position.y- box.position.y, 2) + Math.pow(thumb.position.z - box.position.z, 2));
         if (pinched(posThumb, posIndex)) {
-            if(distance < 0.3 && thumb.physicsImpostor != null && box.physicsImpostor != null && !joined){ 
+            if(distance < 0.3 && thumb.physicsImpostor != null && box.physicsImpostor != null && !joined){
                 thumb.physicsImpostor.addJoint(box.physicsImpostor, joint1);
-                joined = true; 
-                // console.log(joined);   
-            } 
+                joined = true;
+                // console.log(joined);
+            }
         }else if(phyEngine != null && thumb.physicsImpostor != null && box.physicsImpostor != null){
             phyEngine.removeJoint(thumb.physicsImpostor, box.physicsImpostor , joint1);
             joined = false;
