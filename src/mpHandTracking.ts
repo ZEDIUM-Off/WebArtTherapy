@@ -7,6 +7,7 @@ import '@mediapipe/control_utils';
 import * as mpHands from '@mediapipe/hands';
 import drawingUtils from '@mediapipe/drawing_utils';
 
+
 /**
  * @description This variable is used to get the video input stream of the webcam.
  * @type HTMLVideoElement

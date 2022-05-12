@@ -3,6 +3,7 @@ import * as TRACK from './mpHandTracking';
 import * as BABYLON from 'babylonjs';
 import * as mpHands from '@mediapipe/hands';
 
+
 let RhandIsInit = false;
 let LhandIsInit = false;
 let handList : string[] = [];
@@ -81,7 +82,7 @@ function moveHand(keys :mpHands.NormalizedLandmarkList[], index : number, side :
         name += i.toString();
         const sphere  = BENV.scene.getMeshByName(name);
         if (sphere != null) {
-            sphere.position.set(2.5 + (-5)* keypoints[i].x + posTab[0].x*(-5), 2+ (-5) * keypoints[i].y + posTab[0].y*(-5), 5 * keypoints[i].z );
+            sphere.position.set(2.5 + (-5)* keypoints[i].x + posTab[0].x*(-5), 4+ (-5) * keypoints[i].y + posTab[0].y*(-5), 5 * keypoints[i].z );
         }
     }
 }
