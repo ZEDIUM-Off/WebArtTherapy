@@ -2,6 +2,8 @@
 
 [GitHub - ZEDIUM-Off/WebArtTherapy](https://github.com/ZEDIUM-Off/WebArtTherapy)
 
+[![GitHub latest commit](https://badgen.net/github/last-commit/ZEDIUM-Off/WebArtTherapy/main)](https://github.com/ZEDIUM-Off/WebArtTherapy/commit/main)
+![Main Language](https://badgen.net/badge/icon/typescript?icon=typescript&label)
 ## Description :
 
 Ce projet est une démonstration de ce que pourrait être l’art thérapie numérique selon l’art thérapeute **Cécile CHENAVAS**.
