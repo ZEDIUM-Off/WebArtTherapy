@@ -39,7 +39,7 @@ npm install
 
 
 ```bash
-npm run build        #construir les fichier .js
+npm run build        #construire les fichier .js
 npm run start:dev    #watch mode
 ```
 ---
