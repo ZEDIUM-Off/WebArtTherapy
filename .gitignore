@@ -2,7 +2,7 @@
 /artthe-backend/node_modules
 /artthe-backend/public/js
 /node_modules
-
+/artthe-backend/secret
 # Logs
 logs
 *.log
