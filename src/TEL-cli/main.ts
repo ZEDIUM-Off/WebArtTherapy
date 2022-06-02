@@ -1,23 +1,40 @@
-import P2P from 'socket.io-p2p';
 import io from 'socket.io-client';
+import { DataConnection, Peer } from 'peerjs';
+import { getCookie } from '../utils';
+import * as TRACK from '../mpHandTracking';
 
-const socket = io()
-const p2p = new P2P(socket);
-const id = '12345';
+const peer = new Peer();
+const socket = io();
 
-const btn = document.getElementById('btn');
-if(btn === null) {
-    throw console.error( 'no btn' )
-};
+const idGeted = getCookie('PC-ID');
 
-btn.addEventListener('click', () => {
-    p2p.emit('id', 'my-id is : ' + id);
-    console.log('click');
+console.log(idGeted);
+socket.on('connect', () => {
+  console.log('qr-scanned');
+  socket.emit('qr-scanned', idGeted);
 });
 
-p2p.on('ready', (data) => {
-    // p2p.usePeerConnection = true;
-    console.log('ready' + data);
+socket.on('signal peer' , (ids) => {
+  if (ids.PCID === idGeted) {
+    const conn = peer.connect(ids.PEERID);
+    console.log(`trying to connect to peer: ${ids.PEERID}`);
+    conn.on('open', () => {
+      console.log('connected to peer');
+      sendTracking(conn);
+    });
+  }
 });
 
-// p2p.emit('peer-obj', { peerId: id })
+function sendTracking(conn: DataConnection): void {
+  const keyTab = TRACK.locksKeypoints;
+  const posTab = TRACK.keypoints;
+  const handTab = TRACK.handedness;
+  conn.send({
+    keyTab,
+    posTab,
+    handTab,
+  });
+  setTimeout(() => {
+    sendTracking(conn);
+  }, 8);
+}
