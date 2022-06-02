@@ -1,0 +1,102 @@
+@import url('https://fonts.googleapis.com/css2?family=Libre+Baskerville:wght@400;700&display=swap');
+@keyframes spin {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+body {
+    bottom: 0;
+    font-family: 'Libre Baskerville', serif;
+    font-style: rgb(0, 0, 0);
+    left: 0;
+    margin: 0;
+    position: absolute;
+    right: 0;
+    top: 0;
+    transform-origin: 0px 0px;
+    overflow: hidden;
+}
+
+#renderCanvas {
+    width: 100%;
+    height: 100%;
+    touch-action: none;
+}
+
+.pc-cont {
+    position: absolute;
+    background-color: #00000056;
+    max-height: 100%;
+    bottom: 0;
+    z-index: 2;
+    margin-bottom: 1%;
+    margin-left: 1%;
+}
+
+.phone-cont {
+    position: absolute;
+    background-color: #00000056;
+    max-height: 100%;
+    bottom: 0;
+    z-index: 2;
+    position: absolute;
+    top: 0px;
+    right: 0px;
+    bottom: 0px;
+    left: 0px;
+}
+
+.pc-out {
+    height: 200px !important;
+    width: 100% !important;
+    display: block;
+    position: relative;
+    left: 0;
+    top: 100%;
+    aspect-ratio: 16/9;
+}
+
+.phone-out {
+    transform: rotate(90deg);
+    display: block;
+    position: relative;
+}
+
+.input_video {
+    display: none;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+}
+
+.input_video.selfie {
+    transform: scale(-1, 1);
+}
+
+.input_image {
+    position: absolute;
+}
+
+.canvas-container {
+    display: flex;
+    height: 100%;
+    width: 100%;
+    justify-content: center;
+    align-items: center;
+}
+
+
+/* 
+.output_canvas {
+    width: 20%;
+    display: block;
+    position: relative;
+    left: 0;
+    top: 100%;
+} */
