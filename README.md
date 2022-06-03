@@ -9,8 +9,7 @@
 Ce projet est une démonstration de ce que pourrait être l’art thérapie numérique selon l’art thérapeute **Cécile CHENAVAS**.
 
 > *La rencontre avec l’éphémère est une forme de réactualisation de l’expérience subjectivante, pouvant faire écho à l’état de virtualité que nous avons évoqué précédemment.
-C’est un espace-temps en rupture avec la vie ordinaire, un passage à la transformation. Une transformation pour permettre au sujet d’apporter un regard nouveau sur sa façon d’interpréter le monde, et d’anticiper de nouvelles manières d’exister. Par son caractère évanescent le numérique est en rupture avec la matière, et tout comme le dispositif art thérapeutique traditionnel, il ne cède pas à la durabilité, ni à la permanence. Il est de l’ordre de la discontinuité, et ouvre à une expérience nouvelle, non orientée vers la production.
-Il m’est apparu ainsi possible d’envisager un support numérique à l’outil de l’art-thérapeute.  
+C’est un espace-temps en rupture avec la vie ordinaire, un passage à la transformation. Une transformation pour permettre au sujet d’apporter un regard nouveau sur sa façon d’interpréter le monde, et d’anticiper de nouvelles manières d’exister. Par son caractère évanescent le numérique est en rupture avec la matière, et tout comme le dispositif art thérapeutique traditionnel, il ne cède pas à la durabilité, ni à la permanence. Il est de l’ordre de la discontinuité, et ouvre à une expérience nouvelle, non orientée vers la production. Il m’est apparu ainsi possible d’envisager un support numérique à l’outil de l’art-thérapeute.*
 ***Cécile CHENAVAS.***
 > 
 
