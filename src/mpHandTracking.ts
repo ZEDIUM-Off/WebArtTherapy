@@ -5,6 +5,7 @@ import * as mpCam from '@mediapipe/camera_utils';
 import '@mediapipe/control_utils';
 import * as mpHands from '@mediapipe/hands';
 import drawingUtils from '@mediapipe/drawing_utils';
+import * as controls from '@mediapipe/control_utils';
 
 const CAM_HEIGHT = 720;
 const CAM_WIDTH = 1280;
@@ -32,6 +33,8 @@ const canvasCtx: CanvasRenderingContext2D = canvasElement.getContext(
   '2d',
 ) as CanvasRenderingContext2D;
 
+const controlsElement =
+document.getElementsByClassName('control-panel')[0] as HTMLDivElement;
 /**
  * @description Variable in which is store MULTI_HAND_WORLD_LANDMARKS datas from the '@mediapipe' handtracking process.
  * @type : {@link mpHands.NormalizedLandmarkListList}
@@ -109,3 +112,42 @@ const camera = new mpCam.Camera(videoElement, {
   height: CAM_HEIGHT,
 });
 camera.start();
+if (/(tablet|ipad|playbook|silk)|(android(?!.*mobi))/i.test(navigator.userAgent) &&
+  /Mobile|iP(hone|od)|Android|BlackBerry|IEMobile|Kindle|Silk-Accelerated|(hpw|web)OS|Opera M(obi|ini)/.test(
+    navigator.userAgent,
+  )
+) {
+  new controls
+    .ControlPanel(controlsElement, {
+      selfieMode: true,
+      maxNumHands: 2,
+      modelComplexity: 1,
+      minDetectionConfidence: 0.5,
+      minTrackingConfidence: 0.5
+    })
+    .add([
+      new controls.SourcePicker({
+        onFrame:
+          async (input: controls.InputImage, size: controls.Rectangle) => {
+            const aspect = size.height / size.width;
+            let width: number;
+            let height: number;
+            if (window.innerWidth > window.innerHeight) {
+              height = window.innerHeight;
+              width = height / aspect;
+            } else {
+              width = window.innerWidth;
+              height = width * aspect;
+            }
+            canvasElement.width = width;
+            canvasElement.height = height;
+            await hands.send({image: input});
+          },
+    }),
+    ])
+    .on(x => {
+      const options = x as mpHands.Options;
+      videoElement.classList.toggle('selfie', options.selfieMode);
+      hands.setOptions(options);
+    });
+}

@@ -6,8 +6,8 @@ import * as fs from 'fs';
 
 async function bootstrap() {
   const httpsOptions = {
-    key: fs.readFileSync('./secret/192.168.0.31-key.pem'),
-    cert: fs.readFileSync('./secret/192.168.0.31.pem'),
+    key: fs.readFileSync('./secret/172.20.10.11-key.pem'),
+    cert: fs.readFileSync('./secret/172.20.10.11.pem'),
   };
   const app = await NestFactory.create<NestExpressApplication>(AppModule, {
     httpsOptions,
@@ -19,6 +19,6 @@ async function bootstrap() {
   ]);
   app.setViewEngine('hbs');
   await app.listen(3000);
-  console.log(`Application is running on: https://192.168.0.31:3000`);
+  console.log(`Application is running on: https://172.20.10.11:3000`);
 }
 bootstrap();
